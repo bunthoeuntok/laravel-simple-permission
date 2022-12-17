@@ -1,5 +1,0 @@
-<?php
-
-use Bunthoeuntok\SimplePermission\Tests\TestCase;
-
-uses(TestCase::class)->in(__DIR__);
