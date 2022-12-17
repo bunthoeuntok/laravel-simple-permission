@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Bunthoeuntok\SimplePermission\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class SimplePermissionCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-simple-permission';
 
     public $description = 'My command';
 
