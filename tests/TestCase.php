@@ -26,11 +26,9 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app)
     {
-        config()->set('database.default', 'testing');
-
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_laravel-simple-permission_table.php.stub';
-        $migration->up();
-        */
+        $menu = include __DIR__.'/../database/migrations/create_menus_table.php.stub';
+        $action = include __DIR__.'/../database/migrations/create_actions_table.php.stub';
+        $menu->up();
+        $action->up();
     }
 }

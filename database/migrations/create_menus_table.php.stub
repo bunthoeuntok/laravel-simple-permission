@@ -8,11 +8,10 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('laravel_simple_permission_table', function (Blueprint $table) {
+        Schema::create('menus', function (Blueprint $table) {
             $table->id();
-
-            // add fields
-
+            $table->string('menu_name');
+            $table->string('slug')->unique()->index();
             $table->timestamps();
         });
     }
