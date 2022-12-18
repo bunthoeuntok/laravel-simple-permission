@@ -11,8 +11,12 @@ class MenuFactory extends Factory
 
     public function definition()
     {
+        $menuLevels = config('simple-permission.menu_levels');
+
         return [
-            'menu_name' => $this->faker->name()
+            'menu_name' => $this->faker->unique()->name(),
+            'order' => $this->faker->randomDigit(),
+            'level' => $menuLevels[random_int(0, count($menuLevels) - 1)]
         ];
     }
 }

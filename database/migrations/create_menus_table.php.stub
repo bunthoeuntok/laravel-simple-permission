@@ -11,7 +11,10 @@ return new class extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->string('menu_name');
-            $table->string('slug')->unique()->index();
+            $table->string('slug');
+            $table->string('level');
+            $table->unsignedSmallInteger('parent_id')->nullable();
+            $table->unsignedSmallInteger('order')->nullable();
             $table->timestamps();
         });
     }

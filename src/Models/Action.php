@@ -2,15 +2,12 @@
 
 namespace Bunthoeuntok\SimplePermission\Models;
 
-use Bunthoeuntok\SimplePermission\Exceptions\ActionAlreadyExist;
 use Bunthoeuntok\SimplePermission\Exceptions\ActionAlreadyExists;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Action extends Model
 {
-    use HasFactory;
-
     protected $table = 'actions';
     protected $guarded = [];
 

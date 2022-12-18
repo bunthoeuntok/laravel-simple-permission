@@ -2,22 +2,29 @@
 
 namespace Bunthoeuntok\SimplePermission\Models;
 
+use Bunthoeuntok\SimplePermission\Enums\MenuLevel;
+use Bunthoeuntok\SimplePermission\Exceptions\MenuAlreadyExists;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 class Menu extends Model
 {
     use HasFactory;
+    use HasRecursiveRelationships;
 
     protected $table = 'menus';
-    protected $guarded = [];
+    protected $guarded = ['slug'];
 
     protected static function boot()
     {
         parent::boot();
         static::creating(function (Model $model) {
-            $model->slug = str($model->name)->slug();
+            if (self::query()->where('slug', str($model->menu_name)->slug()->toString())->where('parent_id', $model->parent_id)->first()) {
+                throw new MenuAlreadyExists();
+            }
+            $model->slug = str($model->menu_name)->slug()->toString();
         });
     }
 
