@@ -4,11 +4,11 @@ namespace Bunthoeuntok\SimplePermission\Models;
 
 use Bunthoeuntok\SimplePermission\Exceptions\ActionAlreadyExists;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Action extends Model
 {
     protected $table = 'actions';
+
     protected $guarded = [];
 
     protected static function boot()

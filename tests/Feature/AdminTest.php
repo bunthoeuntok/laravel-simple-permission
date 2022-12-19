@@ -12,6 +12,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 class AdminTest extends TestCase
 {
     use WithFaker;
+
     protected $middleware;
 
     public function setUp(): void

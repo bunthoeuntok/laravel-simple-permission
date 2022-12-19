@@ -2,9 +2,9 @@
 
 namespace Bunthoeuntok\SimplePermission;
 
+use Bunthoeuntok\SimplePermission\Commands\SimplePermissionCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Bunthoeuntok\SimplePermission\Commands\SimplePermissionCommand;
 
 class SimplePermissionServiceProvider extends PackageServiceProvider
 {

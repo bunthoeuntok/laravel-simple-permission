@@ -3,10 +3,9 @@
 namespace Bunthoeuntok\SimplePermission\Tests\Feature;
 
 use Bunthoeuntok\SimplePermission\Exceptions\ActionAlreadyExists;
-use Bunthoeuntok\SimplePermission\Exceptions\MenuAlreadyExists;
-use Bunthoeuntok\SimplePermission\Tests\TestCase;
-use Bunthoeuntok\SimplePermission\Models\Menu;
 use Bunthoeuntok\SimplePermission\Models\Action;
+use Bunthoeuntok\SimplePermission\Models\Menu;
+use Bunthoeuntok\SimplePermission\Tests\TestCase;
 
 class MenuStructureTest extends TestCase
 {

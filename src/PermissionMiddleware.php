@@ -16,7 +16,7 @@ class PermissionMiddleware
             return $next($request);
         }
 
-        if (!request()->user()->isAdmin() && !SimplePermission::checkWhiteList($routeName)) {
+        if (! request()->user()->isAdmin() && ! SimplePermission::checkWhiteList($routeName)) {
             return redirect()->back()->with('message', 'You don\'t have permission to acces this page');
         }
     }

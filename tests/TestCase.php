@@ -10,8 +10,11 @@ use Orchestra\Testbench\TestCase as Orchestra;
 class TestCase extends Orchestra
 {
     protected $role;
+
     protected $adminRole;
+
     protected $user;
+
     protected $adminUser;
 
     public function setUp(): void

@@ -16,7 +16,7 @@ class MenuFactory extends Factory
         return [
             'menu_name' => $this->faker->unique()->name(),
             'order' => $this->faker->randomDigit(),
-            'level' => $menuLevels[random_int(0, count($menuLevels) - 1)]
+            'level' => $menuLevels[random_int(0, count($menuLevels) - 1)],
         ];
     }
 }

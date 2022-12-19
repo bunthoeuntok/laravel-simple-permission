@@ -14,7 +14,7 @@ class TestUserFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->email(),
-            'password' => bcrypt('password')
+            'password' => bcrypt('password'),
         ];
     }
 }

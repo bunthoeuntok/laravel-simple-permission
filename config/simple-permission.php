@@ -5,6 +5,6 @@ return [
     'menu_levels' => [
         'module',
         'sub-module',
-        'page'
-    ]
+        'page',
+    ],
 ];

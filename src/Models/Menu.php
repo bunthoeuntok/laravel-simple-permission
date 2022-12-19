@@ -2,12 +2,10 @@
 
 namespace Bunthoeuntok\SimplePermission\Models;
 
-use Bunthoeuntok\SimplePermission\Enums\MenuLevel;
 use Bunthoeuntok\SimplePermission\Exceptions\MenuAlreadyExists;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Query\Builder;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 class Menu extends Model
@@ -16,6 +14,7 @@ class Menu extends Model
     use HasRecursiveRelationships;
 
     protected $table = 'menus';
+
     protected $guarded = ['slug'];
 
     protected static function boot()
