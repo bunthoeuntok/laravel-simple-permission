@@ -24,9 +24,4 @@ class PermissionTest extends TestCase
 
         $this->assertCount(2, $role->permissions);
     }
-
-    /** @test */
-    public function admin_user_has_all_permissions()
-    {
-    }
 }

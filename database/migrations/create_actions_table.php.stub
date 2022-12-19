@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('action_name');
             $table->string('route_name')->unique();
             $table->unsignedInteger('order')->nullable();
+            $table->boolean('default')->default(false);
             $table->timestamps();
         });
     }

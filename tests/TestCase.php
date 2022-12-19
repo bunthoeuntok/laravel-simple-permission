@@ -14,14 +14,15 @@ class TestCase extends Orchestra
     protected $user;
     protected $adminUser;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
         $this->setupDatabase();
-
         Factory::guessFactoryNamesUsing(
             fn (string $modelName) => 'Bunthoeuntok\\SimplePermission\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
+
+        $this->prepareTestingData();
     }
 
     protected function getPackageProviders($app)
@@ -48,7 +49,7 @@ class TestCase extends Orchestra
 
     protected function prepareTestingData()
     {
-        $this->role = Role::factory()->create();
+        $this->role = Role::factory()->create(['is_admin' => false]);
         $this->adminRole = Role::factory()->create(['is_admin' => true]);
         $this->user = TestUser::factory()->create();
         $this->adminUser = TestUser::factory()->create();
