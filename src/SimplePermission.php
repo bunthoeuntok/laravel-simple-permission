@@ -30,7 +30,7 @@ class SimplePermission
         ->toTree();
     }
 
-    public function treeMenu($routeName)
+    public function treeMenu($routeName = '')
     {
         function recursive($menus, $currentPermission)
         {

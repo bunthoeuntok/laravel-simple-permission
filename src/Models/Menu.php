@@ -3,6 +3,7 @@
 namespace Bunthoeuntok\SimplePermission\Models;
 
 use Bunthoeuntok\SimplePermission\Exceptions\MenuAlreadyExists;
+use Bunthoeuntok\SimplePermission\Exceptions\MenuLevelNotMatch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -21,6 +22,9 @@ class Menu extends Model
     {
         parent::boot();
         static::creating(function (Model $model) {
+            if (!in_array($model->level, config('simple-permission.menu_levels'))) {
+                throw new MenuLevelNotMatch();
+            }
             if (self::query()->where('slug', str($model->menu_name)->slug()->toString())->where('parent_id', $model->parent_id)->first()) {
                 throw new MenuAlreadyExists();
             }

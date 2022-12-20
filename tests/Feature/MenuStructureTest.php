@@ -3,9 +3,11 @@
 namespace Bunthoeuntok\SimplePermission\Tests\Feature;
 
 use Bunthoeuntok\SimplePermission\Exceptions\ActionAlreadyExists;
+use Bunthoeuntok\SimplePermission\Exceptions\MenuLevelNotMatch;
 use Bunthoeuntok\SimplePermission\Models\Action;
 use Bunthoeuntok\SimplePermission\Models\Menu;
 use Bunthoeuntok\SimplePermission\Tests\TestCase;
+use Illuminate\Support\Collection;
 
 class MenuStructureTest extends TestCase
 {
@@ -46,6 +48,13 @@ class MenuStructureTest extends TestCase
         Menu::factory()->create(['parent_id' => random_int(1, 5)]);
 
         $tree = Menu::tree()->get()->toTree();
-        dd($tree->toArray());
+        $this->assertInstanceOf(Collection::class, $tree);
+    }
+
+    /** @test */
+    public function menu_level_can_be_one_which_is_setted_in_the_config()
+    {
+        $this->expectException(MenuLevelNotMatch::class);
+        Menu::factory()->create(['level' => 'testing']);
     }
 }
