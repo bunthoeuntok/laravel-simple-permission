@@ -17,13 +17,14 @@ class PermissionMiddleware
             return $next($request);
         }
 
-        if (!request()->user()->isAdmin() && !SimplePermission::checkWhiteList($routeName)) {
+        if (! request()->user()->isAdmin() && ! SimplePermission::checkWhiteList($routeName)) {
             throw new UnauthorizedException(403);
         }
 
         View::share('permision', [
-            'all' => SimplePermission::getPermissions()
+            'all' => SimplePermission::getPermissions(),
         ]);
+
         return $next($request);
     }
 }

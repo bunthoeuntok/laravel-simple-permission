@@ -13,6 +13,7 @@ class Role extends Model
     use HasFactory;
 
     protected $table = 'roles';
+
     protected $guarded = [];
 
     protected static function bood()

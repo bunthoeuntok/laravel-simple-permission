@@ -11,14 +11,18 @@ use Illuminate\Support\Facades\Cache;
 class SimplePermission implements Permission
 {
     protected $roleId;
+
     protected $cacheKey;
+
     protected $menuLevels;
+
     protected $permissions;
+
     protected $menus;
 
     public function __construct()
     {
-        if (!auth()->user() && !auth()->user()->role) {
+        if (! auth()->user() && ! auth()->user()->role) {
             throw new UnauthorizedException(403);
         }
         $this->initial();
@@ -45,7 +49,7 @@ class SimplePermission implements Permission
     {
         return Cache::rememberForever("{$this->cacheKey}.role.{$this->roleId}.pages", fn () => Menu::tree()->addSelect([
             'route_name' => Action::select('route_name')
-                ->when(!$this->user->isAdmin(), function ($query) {
+                ->when(! $this->user->isAdmin(), function ($query) {
                     return $query->join('role_has_permission', 'permission_id', 'actions.id')
                         ->where('role_id', auth()->user()->role_id)
                         ->where('actions.default', true);
@@ -63,7 +67,7 @@ class SimplePermission implements Permission
         function recursive($menus, $currentPermission, $menuLevels)
         {
             foreach ($menus as $key => $menu) {
-                if ($menu->level == $menuLevels[count($menuLevels) -1]) {
+                if ($menu->level == $menuLevels[count($menuLevels) - 1]) {
                     if (! $menu->route_name) {
                         $menus->forget($key);
                     } else {
@@ -110,7 +114,7 @@ class SimplePermission implements Permission
     {
         return Cache::rememberForever("{$this->cacheKey}.roles.{$this->roleId}.actions", fn () => Action::select()
                 ->when(
-                    !$this->user->isAdmin(),
+                    ! $this->user->isAdmin(),
                     fn ($query) => $query->join('role_has_permission', 'actions.id', 'permission_id')
                     ->where('role_id', auth()->user()->role_id)
                 )->get()->toArray());

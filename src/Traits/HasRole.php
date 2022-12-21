@@ -20,9 +20,10 @@ trait HasRole
 
     public function isAdmin()
     {
-        if (!$this->role) {
+        if (! $this->role) {
             throw new UserDoesNotHaveRole();
         }
+
         return $this->role->is_admin;
     }
 }
