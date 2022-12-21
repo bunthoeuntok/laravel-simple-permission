@@ -26,7 +26,6 @@ class SimplePermission implements Permission
             throw new UnauthorizedException(403);
         }
         $this->initial();
-        dd($this->menuLevels);
     }
 
     private function initial(): void

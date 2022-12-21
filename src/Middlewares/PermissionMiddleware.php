@@ -22,7 +22,7 @@ class PermissionMiddleware
         }
 
         View::share('permision', [
-            'all' => SimplePermission::getPermissions(),
+            'all' => SimplePermission::allPermissions(),
         ]);
 
         return $next($request);
