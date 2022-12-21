@@ -3,6 +3,7 @@
 namespace Bunthoeuntok\SimplePermission;
 
 use Bunthoeuntok\SimplePermission\Commands\SimplePermissionCommand;
+use Bunthoeuntok\SimplePermission\Contracts\Permission;
 use Illuminate\Support\Carbon;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -26,6 +27,10 @@ class SimplePermissionServiceProvider extends PackageServiceProvider
 
     public function boot()
     {
+        app()->bind(Permission::class, function () {
+            return new SimplePermission();
+        });
+
         $this->publishing();
     }
 

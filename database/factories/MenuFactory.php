@@ -11,7 +11,7 @@ class MenuFactory extends Factory
 
     public function definition()
     {
-        $menuLevels = config('simple-permission.menu_levels');
+        $menuLevels = config('simple-permission.menu_levels', ['page']);
 
         return [
             'menu_name' => $this->faker->unique()->name(),

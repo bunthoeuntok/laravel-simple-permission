@@ -22,7 +22,7 @@ class Menu extends Model
     {
         parent::boot();
         static::creating(function (Model $model) {
-            if (!in_array($model->level, config('simple-permission.menu_levels'))) {
+            if (!in_array($model->level, config('simple-permission.menu_levels', ['page']))) {
                 throw new MenuLevelNotMatch();
             }
             if (self::query()->where('slug', str($model->menu_name)->slug()->toString())->where('parent_id', $model->parent_id)->first()) {

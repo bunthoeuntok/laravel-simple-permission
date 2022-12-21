@@ -5,7 +5,6 @@ namespace Bunthoeuntok\SimplePermission\Tests\Feature;
 use Bunthoeuntok\SimplePermission\Facades\SimplePermission;
 use Bunthoeuntok\SimplePermission\Models\Action;
 use Bunthoeuntok\SimplePermission\Models\Menu;
-use Bunthoeuntok\SimplePermission\PermissionMiddleware;
 use Bunthoeuntok\SimplePermission\Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 
@@ -18,10 +17,9 @@ class AdminTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->middleware = new PermissionMiddleware();
 
         $this->actingAs($this->adminUser);
-        $module = Menu::factory()->create(['level' => 'module']);
+        $module = Menu::factory()->create(['level' => 'page']);
         $menu1 = Menu::factory()->create(['parent_id' => $module->id, 'level' => 'page']);
         $menu2 = Menu::factory()->create(['parent_id' => $module->id, 'level' => 'page']);
         $curentAction = $this->faker->url();
@@ -42,6 +40,6 @@ class AdminTest extends TestCase
     /** @test */
     public function admin_user_can_access_all_permissions()
     {
-        $this->assertCount(8, SimplePermission::getPermissions());
+        $this->assertCount(8, SimplePermission::allPermissions());
     }
 }

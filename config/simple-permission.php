@@ -7,4 +7,5 @@ return [
         'sub-module',
         'page',
     ],
+    'cache_key' => 'permissions',
 ];
