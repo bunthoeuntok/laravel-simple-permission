@@ -2,9 +2,8 @@
 
 namespace Bunthoeuntok\SimplePermission\Commands;
 
-use Bunthoeuntok\SimplePermission\PermissionParse;
+use Bunthoeuntok\SimplePermission\PermissionImport;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 
 class SimplePermissionCommand extends Command
 {
@@ -15,27 +14,8 @@ class SimplePermissionCommand extends Command
     public function handle()
     {
         $this->info('Starting import permission...');
-
-        try {
-            $sample = $this->loadFile();
-        } catch (\Throwable $th) {
-            return;
-        }
-
-        $parse = new PermissionParse($sample);
-        if (! $parse->validate()) {
-            $this->error('import file is incorrect format.');
-            return;
-        }
-    }
-
-    private function loadFile()
-    {
-        try {
-            return File::get(__DIR__.'/../../tests/sample-import.json');
-        } catch (\Throwable $th) {
-            $this->error('File not found.');
-            return;
-        }
+        $data = config('simple-permission.data');
+        $import = new PermissionImport($data);
+        $import->save();
     }
 }

@@ -12,9 +12,4 @@ class ImportCommandTest extends TestCase
         $command = $this->artisan('permission:install');
         $command->expectsOutputToContain('Starting import permission...');
     }
-
-    /** @test */
-    public function it_can_load_the_import_file()
-    {
-    }
 }
