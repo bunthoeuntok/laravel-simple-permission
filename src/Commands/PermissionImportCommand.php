@@ -75,7 +75,7 @@ class PermissionImportCommand extends Command
                     foreach ($menu['actions'] as $action) {
                         Action::updateOrCreate(['route_name' => $action['route_name']], [
                             'action_name' => $action['action_name'],
-                            'default' => $action['default'],
+                            'default' => $action['default'] ?? false,
                             'menu_id' => $created->id,
                             'order' => $action['order'] ?? null,
                         ]);
