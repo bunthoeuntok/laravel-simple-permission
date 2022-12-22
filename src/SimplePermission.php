@@ -6,6 +6,7 @@ use Bunthoeuntok\SimplePermission\Contracts\Permission;
 use Bunthoeuntok\SimplePermission\Exceptions\UnauthorizedException;
 use Bunthoeuntok\SimplePermission\Models\Action;
 use Bunthoeuntok\SimplePermission\Models\Menu;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class SimplePermission implements Permission
@@ -127,5 +128,10 @@ class SimplePermission implements Permission
     public function allPermissions(): array
     {
         return $this->permissions;
+    }
+
+    public function pageActions(): array
+    {
+        dd(request());
     }
 }

@@ -27,11 +27,20 @@ class SimplePermissionServiceProvider extends PackageServiceProvider
 
     public function boot()
     {
+        $this->publishing();
+    }
+
+    public function register()
+    {
         app()->bind(Permission::class, function () {
             return new SimplePermission();
         });
 
-        $this->publishing();
+        if ($this->app->runningInConsole()) {
+            $this->commands(
+                SimplePermissionCommand::class
+            );
+        }
     }
 
     protected function publishing()

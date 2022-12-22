@@ -2,6 +2,8 @@
 
 namespace Bunthoeuntok\SimplePermission\Contracts;
 
+use Illuminate\Http\Request;
+
 interface Permission
 {
     public function reloadCache(): void;
@@ -11,4 +13,6 @@ interface Permission
     public function allPermissions(): array;
 
     public function checkWhiteList(string $routeName): int;
+
+    public function pageActions(): array;
 }
