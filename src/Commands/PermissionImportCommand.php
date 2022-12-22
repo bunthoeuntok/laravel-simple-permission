@@ -21,7 +21,7 @@ class PermissionImportCommand extends Command
             $this->info('Done...');
         } catch (\Throwable $th) {
             if ($this->shouldOverwrite($th->getMessage())) {
-                $this->save($data, true);
+                $this->saveForce($data);
                 $this->info('Import overwrite!');
             }
         }
@@ -36,46 +36,56 @@ class PermissionImportCommand extends Command
         );
     }
 
-    private function save($data, $force = false)
+    private function save($data)
     {
-        function loopSaveMenu($menus, $parerntId = null, $force = false)
+        function recursiveSave($menus, $parerntId = null, $force = false)
         {
             foreach ($menus as $menu) {
-                if (! $force) {
-                    $created = Menu::create([
-                        'level' => $menu['level'],
-                        'menu_name' => $menu['menu_name'],
-                        'parent_id' => $parerntId,
-                        'order' => $menu['order'] ?? null,
-                    ]);
-                } else {
-                    $created = Menu::updateOrCreate(['slug' => str($menu['menu_name'])->slug()], [
-                        'level' => $menu['level'],
-                        'menu_name' => $menu['menu_name'],
-                        'parent_id' => $parerntId,
-                        'order' => $menu['order'] ?? null,
-                    ]);
-                }
+                $created = Menu::create([
+                    'level' => $menu['level'],
+                    'menu_name' => $menu['menu_name'],
+                    'parent_id' => $parerntId,
+                    'order' => $menu['order'] ?? null,
+                ]);
 
                 if (isset($menu['actions']) && count($menu['actions'])) {
-                    if (! $force) {
-                        $created->actions()->createMany($menu['actions']);
-                    } else {
-                        foreach ($menu['actions'] as $action) {
-                            Action::updateOrCreate(['route_name' => $action['route_name']], [
-                                'action_name' => $action['action_name'],
-                                'default' => $action['default'],
-                                'menu_id' => $created->id,
-                                'order' => $action['order'] ?? null,
-                            ]);
-                        }
-                    }
+                    $created->actions()->createMany($menu['actions']);
                 } elseif (isset($menu['children'])) {
-                    loopSaveMenu($menu['children'], $created->id, $force);
+                    recursiveSave($menu['children'], $created->id);
                 }
             }
         }
 
-        loopSaveMenu($data, null, $force);
+        recursiveSave($data, null);
+    }
+
+    private function saveForce($data)
+    {
+        function recursiveSaveForce($menus, $parerntId = null)
+        {
+            foreach ($menus as $menu) {
+                $created = Menu::updateOrCreate(['slug' => str($menu['menu_name'])->slug()], [
+                    'level' => $menu['level'],
+                    'menu_name' => $menu['menu_name'],
+                    'parent_id' => $parerntId,
+                    'order' => $menu['order'] ?? null,
+                ]);
+
+                if (isset($menu['actions']) && count($menu['actions'])) {
+                    foreach ($menu['actions'] as $action) {
+                        Action::updateOrCreate(['route_name' => $action['route_name']], [
+                            'action_name' => $action['action_name'],
+                            'default' => $action['default'],
+                            'menu_id' => $created->id,
+                            'order' => $action['order'] ?? null,
+                        ]);
+                    }
+                } elseif (isset($menu['children'])) {
+                    recursiveSaveForce($menu['children'], $created->id);
+                }
+            }
+        }
+
+        recursiveSaveForce($data, null);
     }
 }
