@@ -38,7 +38,7 @@ class PermissionImportCommand extends Command
 
     private function save($data, $force = false)
     {
-        function recursiveSave($menus, $parerntId = null, $force = false)
+        function loopSaveMenu($menus, $parerntId = null, $force = false)
         {
             foreach ($menus as $menu) {
                 if (! $force) {
@@ -71,11 +71,11 @@ class PermissionImportCommand extends Command
                         }
                     }
                 } elseif (isset($menu['children'])) {
-                    recursiveSave($menu['children'], $created->id);
+                    loopSaveMenu($menu['children'], $created->id, $force);
                 }
             }
         }
 
-        recursiveSave($data, null, $force);
+        loopSaveMenu($data, null, $force);
     }
 }
