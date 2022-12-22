@@ -4,9 +4,7 @@ namespace Bunthoeuntok\SimplePermission\Commands;
 
 use Bunthoeuntok\SimplePermission\Models\Action;
 use Bunthoeuntok\SimplePermission\Models\Menu;
-use Bunthoeuntok\SimplePermission\PermissionImport;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 
 class PermissionImportCommand extends Command
 {
@@ -38,30 +36,29 @@ class PermissionImportCommand extends Command
         );
     }
 
-
     private function save($data, $force = false)
     {
         function recursiveSave($menus, $parerntId = null, $force = false)
         {
             foreach ($menus as $menu) {
-                if (!$force) {
+                if (! $force) {
                     $created = Menu::create([
                         'level' => $menu['level'],
                         'menu_name' => $menu['menu_name'],
                         'parent_id' => $parerntId,
-                        'order' => $menu['order'] ?? null
+                        'order' => $menu['order'] ?? null,
                     ]);
                 } else {
                     $created = Menu::updateOrCreate(['slug' => str($menu['menu_name'])->slug()], [
                         'level' => $menu['level'],
                         'menu_name' => $menu['menu_name'],
                         'parent_id' => $parerntId,
-                        'order' => $menu['order'] ?? null
+                        'order' => $menu['order'] ?? null,
                     ]);
                 }
 
                 if (isset($menu['actions']) && count($menu['actions'])) {
-                    if (!$force) {
+                    if (! $force) {
                         $created->actions()->createMany($menu['actions']);
                     } else {
                         foreach ($menu['actions'] as $action) {
