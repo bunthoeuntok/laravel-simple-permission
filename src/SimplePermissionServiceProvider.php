@@ -47,7 +47,7 @@ class SimplePermissionServiceProvider extends PackageServiceProvider
     {
         $this->publishes([
             __DIR__.'/../config/simple-permission.php' => config_path('simple-permission.php'),
-        ], 'permission-config');
+        ], 'config');
 
         $this->publishes([
             __DIR__.'/../database/migrations/add_role_id_to_users_table.php.stub' => $this->generateMigrationName('add_role_id_to_users_table.php', Carbon::now(2)),
@@ -55,6 +55,6 @@ class SimplePermissionServiceProvider extends PackageServiceProvider
             __DIR__.'/../database/migrations/create_menus_table.php.stub' => $this->generateMigrationName('create_menus_table.php', Carbon::now()->subSecond(2)),
             __DIR__.'/../database/migrations/create_actions_table.php.stub' => $this->generateMigrationName('create_actions_table.php', Carbon::now()->subSecond(1)),
             __DIR__.'/../database/migrations/create_role_has_permission_table.php.stub' => $this->generateMigrationName('create_role_has_permission_table.php', Carbon::now()),
-        ], 'permission-migration');
+        ], 'migration');
     }
 }

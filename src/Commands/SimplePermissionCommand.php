@@ -7,15 +7,19 @@ use Illuminate\Console\Command;
 
 class SimplePermissionCommand extends Command
 {
-    public $signature = 'permission:install';
+    public $signature = 'permission:import';
 
-    public $description = 'My command';
+    public $description = 'Import permission data';
 
     public function handle()
     {
         $this->info('Starting import permission...');
         $data = config('simple-permission.data');
         $import = new PermissionImport($data);
-        $import->save();
+        try {
+            $import->save();
+        } catch (\Throwable $th) {
+            $this->error($th->getMessage());
+        }
     }
 }
