@@ -2,6 +2,7 @@
 
 namespace Bunthoeuntok\SimplePermission;
 
+use Bunthoeuntok\SimplePermission\Commands\PermissionImportCommand;
 use Bunthoeuntok\SimplePermission\Commands\SimplePermissionCommand;
 use Bunthoeuntok\SimplePermission\Contracts\Permission;
 use Illuminate\Support\Carbon;
@@ -38,7 +39,8 @@ class SimplePermissionServiceProvider extends PackageServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands(
-                SimplePermissionCommand::class
+                SimplePermissionCommand::class,
+                PermissionImportCommand::class
             );
         }
     }
@@ -48,6 +50,9 @@ class SimplePermissionServiceProvider extends PackageServiceProvider
         $this->publishes([
             __DIR__.'/../config/simple-permission.php' => config_path('simple-permission.php'),
         ], 'config');
+        $this->publishes([
+            __DIR__.'/../stubs/PermissionMiddleware.php.stub' => app_path('Http/Middleware/PermissionMiddleware.php'),
+        ], 'middleware');
 
         $this->publishes([
             __DIR__.'/../database/migrations/add_role_id_to_users_table.php.stub' => $this->generateMigrationName('add_role_id_to_users_table.php', Carbon::now(2)),

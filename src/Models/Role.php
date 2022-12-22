@@ -22,7 +22,7 @@ class Role extends Model
 
         static::creating(function (Model $model) {
             if (self::query()->where('role_name', $model->role_name)->first()) {
-                throw new RoleAlreadyExists();
+                throw new RoleAlreadyExists($model->role_name);
             }
         });
     }

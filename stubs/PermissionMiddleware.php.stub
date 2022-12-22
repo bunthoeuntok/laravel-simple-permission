@@ -1,6 +1,6 @@
 <?php
 
-namespace Bunthoeuntok\SimplePermission\Middlewares;
+namespace App\Http\Middleware;
 
 use Bunthoeuntok\SimplePermission\Exceptions\UnauthorizedException;
 use Bunthoeuntok\SimplePermission\Facades\SimplePermission;

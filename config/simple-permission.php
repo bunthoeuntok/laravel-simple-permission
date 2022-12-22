@@ -12,6 +12,7 @@ return [
     'data' => [
         [
             "menu_name" => "pages",
+            "level" => "page",
             "actions" => [
                 [
                     "action_name" => "index",

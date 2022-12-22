@@ -23,10 +23,10 @@ class Menu extends Model
         parent::boot();
         static::creating(function (Model $model) {
             if (! in_array($model->level, config('simple-permission.menu_levels', ['page']))) {
-                throw new MenuLevelNotMatch();
+                throw new MenuLevelNotMatch($model->level);
             }
             if (self::query()->where('slug', str($model->menu_name)->slug()->toString())->where('parent_id', $model->parent_id)->first()) {
-                throw new MenuAlreadyExists();
+                throw new MenuAlreadyExists($model->menu_name);
             }
             $model->slug = str($model->menu_name)->slug()->toString();
         });
