@@ -17,11 +17,12 @@ class SimplePermissionCommand extends Command
 
         // Publish configuration
         $this->info('Publishing configuration...');
-        if (!$this->configExists('simple-permission.php')) {
+        if (! $this->configExists('simple-permission.php')) {
             $this->publishConfiguration();
             $this->info('Published configuration');
         } else {
             $this->info('Skip, it published already.');
+
             return;
         }
 
@@ -42,7 +43,7 @@ class SimplePermissionCommand extends Command
     {
         $params = [
             '--provider' => "Bunthoeuntok\SimplePermission\SimplePermissionServiceProvider",
-            '--tag' => "config"
+            '--tag' => 'config',
         ];
 
         $this->call('vendor:publish', $params);
@@ -52,7 +53,7 @@ class SimplePermissionCommand extends Command
     {
         $params = [
             '--provider' => "Bunthoeuntok\SimplePermission\SimplePermissionServiceProvider",
-            '--tag' => "migration"
+            '--tag' => 'migration',
         ];
 
         $this->call('vendor:publish', $params);
@@ -62,7 +63,7 @@ class SimplePermissionCommand extends Command
     {
         $params = [
             '--provider' => "Bunthoeuntok\SimplePermission\SimplePermissionServiceProvider",
-            '--tag' => "middleware"
+            '--tag' => 'middleware',
         ];
 
         $this->call('vendor:publish', $params);

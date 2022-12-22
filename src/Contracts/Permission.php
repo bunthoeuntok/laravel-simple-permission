@@ -2,8 +2,6 @@
 
 namespace Bunthoeuntok\SimplePermission\Contracts;
 
-use Illuminate\Http\Request;
-
 interface Permission
 {
     public function reloadCache(): void;

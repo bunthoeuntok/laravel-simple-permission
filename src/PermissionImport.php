@@ -14,7 +14,6 @@ class PermissionImport
         $this->data = $data;
     }
 
-
     public function save()
     {
         function recursiveSave($menus, $parerntId = null)
@@ -23,7 +22,7 @@ class PermissionImport
                 $created = Menu::updateOrCreate(['slug' => str($menu['menu_name'])->slug()], [
                     'level' => $menu['level'],
                     'menu_name' => $menu['menu_name'],
-                    'parent_id' => $parerntId
+                    'parent_id' => $parerntId,
                 ]);
 
                 if (isset($menu['actions']) && count($menu['actions'])) {
