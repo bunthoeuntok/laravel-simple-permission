@@ -38,7 +38,7 @@ class PermissionImportCommand extends Command
 
     private function save($data)
     {
-        function recursiveSave($menus, $parerntId = null)
+        function recursiveSave($menus, $parerntId = null, $force = false)
         {
             foreach ($menus as $menu) {
                 $created = Menu::create([
@@ -61,12 +61,10 @@ class PermissionImportCommand extends Command
 
     private function saveForce($data)
     {
-        Menu::truncate();
-        Action::truncate();
         function recursiveSaveForce($menus, $parerntId = null)
         {
             foreach ($menus as $menu) {
-                $created = Menu::create([
+                $created = Menu::updateOrCreate(['slug' => str($menu['menu_name'])->slug()], [
                     'level' => $menu['level'],
                     'menu_name' => $menu['menu_name'],
                     'parent_id' => $parerntId,
@@ -74,7 +72,14 @@ class PermissionImportCommand extends Command
                 ]);
 
                 if (isset($menu['actions']) && count($menu['actions'])) {
-                    $created->actions()->createMany($menu['actions']);
+                    foreach ($menu['actions'] as $action) {
+                        Action::updateOrCreate(['route_name' => $action['route_name']], [
+                            'action_name' => $action['action_name'],
+                            'default' => $action['default'] ?? false,
+                            'menu_id' => $created->id,
+                            'order' => $action['order'] ?? null,
+                        ]);
+                    }
                 } elseif (isset($menu['children'])) {
                     recursiveSaveForce($menu['children'], $created->id);
                 }
