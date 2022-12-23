@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/bunthoeuntok/laravel-simple-permission/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/bunthoeuntok/laravel-simple-permission/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/bunthoeuntok/laravel-simple-permission.svg?style=flat-square)](https://packagist.org/packages/bunthoeuntok/laravel-simple-permission)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+This package is developed to help laravel developer to implement siple role and permission.
 
 
 
