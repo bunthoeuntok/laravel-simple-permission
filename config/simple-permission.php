@@ -23,7 +23,7 @@ return [
                     'action_name' => 'delete',
                     'route_name' => 'users.delete',
                 ],
-            ]
+            ],
         ],
     ],
 ];
