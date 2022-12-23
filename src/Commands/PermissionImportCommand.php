@@ -21,7 +21,7 @@ class PermissionImportCommand extends Command
             $this->info('Done...');
         } catch (\Throwable $th) {
             if ($this->shouldOverwrite($th->getMessage())) {
-                $this->saveForce($data);
+                $this->save($data, true);
                 $this->info('Import overwrite!');
             }
         }
@@ -36,10 +36,14 @@ class PermissionImportCommand extends Command
         );
     }
 
-    private function save($data)
+    private function save($data, $force = false)
     {
         function recursiveSave($menus, $parerntId = null, $force = false)
         {
+            if ($force) {
+                Menu::truncate();
+                Action::truncate();
+            }
             foreach ($menus as $menu) {
                 $created = Menu::create([
                     'level' => $menu['level'],
@@ -56,36 +60,38 @@ class PermissionImportCommand extends Command
             }
         }
 
-        recursiveSave($data, null);
+        recursiveSave($data, null, $force);
     }
 
-    private function saveForce($data)
-    {
-        function recursiveSaveForce($menus, $parerntId = null)
-        {
-            foreach ($menus as $menu) {
-                $created = Menu::updateOrCreate(['slug' => str($menu['menu_name'])->slug()], [
-                    'level' => $menu['level'],
-                    'menu_name' => $menu['menu_name'],
-                    'parent_id' => $parerntId,
-                    'order' => $menu['order'] ?? null,
-                ]);
+    // private function saveForce($data)
+    // {
+    //     Menu::truncate();
+    //     Action::truncate();
+    //     function recursiveSaveForce($menus, $parerntId = null)
+    //     {
+    //         foreach ($menus as $menu) {
+    //             $created = Menu::create([
+    //                 'level' => $menu['level'],
+    //                 'menu_name' => $menu['menu_name'],
+    //                 'parent_id' => $parerntId,
+    //                 'order' => $menu['order'] ?? null,
+    //             ]);
 
-                if (isset($menu['actions']) && count($menu['actions'])) {
-                    foreach ($menu['actions'] as $action) {
-                        Action::updateOrCreate(['route_name' => $action['route_name']], [
-                            'action_name' => $action['action_name'],
-                            'default' => $action['default'] ?? false,
-                            'menu_id' => $created->id,
-                            'order' => $action['order'] ?? null,
-                        ]);
-                    }
-                } elseif (isset($menu['children'])) {
-                    recursiveSaveForce($menu['children'], $created->id);
-                }
-            }
-        }
+    //             if (isset($menu['actions']) && count($menu['actions'])) {
+    //                 foreach ($menu['actions'] as $action) {
+    //                     Action::updateOrCreate(['route_name' => $action['route_name']], [
+    //                         'action_name' => $action['action_name'],
+    //                         'default' => $action['default'] ?? false,
+    //                         'menu_id' => $created->id,
+    //                         'order' => $action['order'] ?? null,
+    //                     ]);
+    //                 }
+    //             } elseif (isset($menu['children'])) {
+    //                 recursiveSaveForce($menu['children'], $created->id);
+    //             }
+    //         }
+    //     }
 
-        recursiveSaveForce($data, null);
-    }
+    //     recursiveSaveForce($data, null);
+    // }
 }

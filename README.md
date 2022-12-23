@@ -44,7 +44,7 @@ return [
 
     // Menu structure to import
     'data' => [
-
+        ...
     ]
 ];
 ```

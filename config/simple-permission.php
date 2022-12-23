@@ -11,27 +11,19 @@ return [
 
     'data' => [
         [
-            'menu_name' => 'pages',
+            'menu_name' => 'User',
             'level' => 'page',
             'actions' => [
                 [
                     'action_name' => 'index',
-                    'route_name' => 'modules.pages.index',
+                    'route_name' => 'users.index',
                     'default' => true,
                 ],
                 [
-                    'action_name' => 'create',
-                    'route_name' => 'modules.pages.create',
-                ],
-                [
-                    'action_name' => 'edit',
-                    'route_name' => 'modules.pages.edit',
-                ],
-                [
                     'action_name' => 'delete',
-                    'route_name' => 'modules.pages.delete',
+                    'route_name' => 'users.delete',
                 ],
-            ],
+            ]
         ],
     ],
 ];
