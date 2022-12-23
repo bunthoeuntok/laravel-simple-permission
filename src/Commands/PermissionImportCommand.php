@@ -5,6 +5,7 @@ namespace Bunthoeuntok\SimplePermission\Commands;
 use Bunthoeuntok\SimplePermission\Models\Action;
 use Bunthoeuntok\SimplePermission\Models\Menu;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class PermissionImportCommand extends Command
 {
@@ -31,7 +32,7 @@ class PermissionImportCommand extends Command
     {
         return $this->confirm(
             $message.
-            ', Do you want to overwrite it?',
+            ', Do you want to start over again?',
             false
         );
     }
@@ -61,6 +62,12 @@ class PermissionImportCommand extends Command
 
     private function saveForce($data)
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('role_has_permission')->truncate();
+        DB::table('actions')->truncate();
+        DB::table('menus')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
         function recursiveSaveForce($menus, $parerntId = null)
         {
             foreach ($menus as $menu) {
